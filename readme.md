@@ -1,5 +1,17 @@
-#todo
--1.pdf viewer on the ui
--2.loading animation during execution
--3.lamma will make a csv file and then return the output and the output will be written in an excel file.
--4.delete the data after use.
+# TODO List
+
+### Features to Implement:
+1. **PDF Viewer on UI**
+   - Integrate a PDF viewer to display uploaded files directly in the browser.
+
+2. **Loading Animation**
+   - Show a loading animation while processing tasks to improve user experience.
+
+3. **Llama Model Data Handling**
+   - The Llama model will generate a CSV file.
+   - The output will be extracted from the CSV and written to an Excel file.
+
+4. **Data Cleanup**
+   - Ensure that generated files (CSV & Excel) are deleted after processing to free up storage.
+
+---

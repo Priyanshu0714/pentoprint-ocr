@@ -9,7 +9,7 @@ function deletefile(folderpath,file_extension){
         files.forEach(file=>{
             if(file.endsWith(file_extension)){
                 console.log(file)
-                fs.unlink(`./uploads/${file}`,err=>{
+                fs.unlink(`${folderpath}/${file}`,err=>{
                     if(err){
                         console.log("unable to delete the files")
                     }

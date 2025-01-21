@@ -10,7 +10,7 @@ const openai = new OpenAI({
  
 async function main() {
   try{
-    const filepath="./recognized_text.txt";
+    const filepath="./recognized_txt/recognized_text.txt";
     const filecontent=await fs.readFile(filepath,"utf-8");
     const completion = await openai.chat.completions.create({
         model: "nvidia/llama-3.1-nemotron-70b-instruct",

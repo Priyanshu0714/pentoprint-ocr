@@ -84,8 +84,8 @@ async function processImages() {
     }
 
     if (allRecognizedText) {
-      fs.writeFileSync("recognized_text.txt", allRecognizedText.trim(), "utf8");
-      fs.appendFileSync("recognized_text.txt", "\n\nExtract only the names and UIDs of the data and give the output as CSV", "utf8");
+      fs.writeFileSync("./recognized_txt/recognized_text.txt", allRecognizedText.trim(), "utf8");
+      fs.appendFileSync("./recognized_txt/recognized_text.txt", "\n\nExtract only the names and UIDs of the data and give the output as CSV", "utf8");
     } else {
       console.log("No recognized text to save.");
     }

@@ -1,7 +1,7 @@
 const { fromPath } = require("pdf2pic");
 const fs = require("fs");
 
-async function convertPdfToImages(pdfPath, outputDir = './output-images', options = {}) {
+async function convertPdfToImages(pdfPath,num=1, outputDir = `./output-images${num}`,options = {}) {
     // Ensure output directory exists
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir, { recursive: true });

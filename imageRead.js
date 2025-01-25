@@ -5,10 +5,9 @@ const path = require("path");
 const endpoint = "https://ocr140705.cognitiveservices.azure.com/";
 const subscriptionKey = "34K3RpNb2hZgUwbaXY534Mk3AzKpsjqGVZ9cNpTtJc3AYYNbA7DmJQQJ99BAACYeBjFXJ3w3AAAFACOG8XjR";
 
-const dirname = path.join(__dirname, "output-images");
 
 // Function to get all image file paths
-async function getImageFilePaths() {
+async function getImageFilePaths(dirname) {
   return new Promise((resolve, reject) => {
     fs.readdir(dirname, (err, files) => {
       if (err) {
@@ -71,9 +70,10 @@ async function recognizeHandwriting(imageFilePath) {
 }
 
 // Process images after ensuring the file list is ready
-async function processImages() {
+async function processImages(num) {
+  const dirname = path.join(__dirname, `output-images${num}`);
   try {
-    const imageFilePaths = await getImageFilePaths(); // Wait until files are loaded
+    const imageFilePaths = await getImageFilePaths(dirname); // Wait until files are loaded
     let allRecognizedText = "";
 
     for (const imageFilePath of imageFilePaths) {
@@ -84,8 +84,8 @@ async function processImages() {
     }
 
     if (allRecognizedText) {
-      fs.writeFileSync("./recognized_txt/recognized_text.txt", allRecognizedText.trim(), "utf8");
-      fs.appendFileSync("./recognized_txt/recognized_text.txt", "\n\nExtract only the names and UIDs of the data and give the output as CSV in json format", "utf8");
+      fs.writeFileSync(`./recognized_txt${num}/recognized_text.txt`, allRecognizedText.trim(), "utf8");
+      fs.appendFileSync(`./recognized_txt${num}/recognized_text.txt`, "\n\nExtract only the names and UIDs of the data and give the output as CSV in json format", "utf8");
     } else {
       console.log("No recognized text to save.");
     }

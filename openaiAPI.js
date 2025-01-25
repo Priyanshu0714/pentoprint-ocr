@@ -8,9 +8,10 @@ const openai = new OpenAI({
   baseURL: 'https://integrate.api.nvidia.com/v1',
 })
  
-async function main() {
+async function main(num) {
+  // let 
   try{
-    const filepath="./recognized_txt/recognized_text.txt";
+    const filepath=`./recognized_txt${num}/recognized_text.txt`;
     const filecontent=await fs.readFile(filepath,"utf-8");
     const completion = await openai.chat.completions.create({
         model: "nvidia/llama-3.1-nemotron-70b-instruct",
@@ -22,6 +23,7 @@ async function main() {
       })
       for await (const chunk of completion) {
         process.stdout.write(chunk.choices[0]?.delta?.content || '')
+
       }
   }catch(error){
     console.log("Some error occured ",error)

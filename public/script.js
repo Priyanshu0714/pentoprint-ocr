@@ -55,3 +55,25 @@ function closePreview() {
 document.getElementById("previewbutton").addEventListener("click", () => {
     document.getElementById("preview-popup").classList.replace("hidden", "flex");
 });
+
+// form validation 
+function validateForm() {
+    const fileInput = document.getElementById("file");
+    const file = fileInput.files[0];
+
+    if (!file) {
+        return false;
+    }
+
+    if (!file.name.endsWith(".pdf")) {
+        return false;
+    }
+
+    const maxSize = 10 * 1024 * 1024; 
+    if (file.size > maxSize) {
+        alert("File size exceeds 10MB. Please upload a smaller file.");
+        return false;
+    }
+
+    return true;
+}

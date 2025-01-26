@@ -15,8 +15,6 @@ function grayscale(num){
           .toFile(`./grayscale_img${num}/output-image${index}.png`, (err, info) => {
               if (err) {
                   console.error(err);
-              } else {
-                  console.log('Image converted:', info);
               }
           });
       

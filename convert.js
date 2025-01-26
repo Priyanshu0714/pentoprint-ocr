@@ -20,7 +20,7 @@ async function convertPdfToImages(pdfPath,num=1, outputDir = `./output-images${n
 
     return converter.bulk(-1) // Convert all pages
         .then((images) => {
-            console.log("PDF converted to images:", images);
+            // console.log("PDF converted to images:", images);
             return images;
         })
         .catch((error) => {

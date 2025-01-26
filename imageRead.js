@@ -85,7 +85,7 @@ async function processImages(num) {
 
     if (allRecognizedText) {
       fs.writeFileSync(`./recognized_txt${num}/recognized_text.txt`, allRecognizedText.trim(), "utf8");
-      fs.appendFileSync(`./recognized_txt${num}/recognized_text.txt`, "\n\nExtract only the names and UIDs of the data and give the output as CSV in json format", "utf8");
+      fs.appendFileSync(`./recognized_txt${num}/recognized_text.txt`, "\n\nExtract only the names and UIDs of the data and give the output as CSV in json format like [{name :studentname,uid:studentuid}]", "utf8");
     } else {
       console.log("No recognized text to save.");
     }

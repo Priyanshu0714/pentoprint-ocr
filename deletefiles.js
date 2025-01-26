@@ -13,9 +13,6 @@ function deletefile(folderpath,file_extension){
                     if(err){
                         console.log("unable to delete the files")
                     }
-                    else{
-                        console.log("file delete")
-                    }
                 })
             }
         })

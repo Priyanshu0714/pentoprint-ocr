@@ -1,7 +1,7 @@
-// import OpenAI from 'openai';
-// import fs from 'fs/promises'; // ✅ Use this for ES Modules
+const { json } = require('express');
 const OpenAI = require('openai');
 const fs = require('fs').promises;
+const reader=require("xlsx")
 
 const openai = new OpenAI({
   apiKey: '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',
@@ -9,7 +9,7 @@ const openai = new OpenAI({
 })
  
 async function main(num) {
-  // let 
+  let maincontent=""
   try{
     const filepath=`./recognized_txt${num}/recognized_text.txt`;
     const filecontent=await fs.readFile(filepath,"utf-8");
@@ -22,9 +22,11 @@ async function main(num) {
         stream: true,
       })
       for await (const chunk of completion) {
-        process.stdout.write(chunk.choices[0]?.delta?.content || '')
-
+        // process.stdout.write(chunk.choices[0]?.delta?.content || '')
+        maincontent+=chunk.choices[0]?.delta?.content || ''
       }
+      // process.stdout.write(maincontent)
+      WriteToExcel(maincontent);
   }catch(error){
     console.log("Some error occured ",error)
   }
@@ -32,5 +34,16 @@ async function main(num) {
   
 }
 
+function WriteToExcel(message){
+  const startindex = message.indexOf('[');
+  const endindex = message.indexOf(']')+1;
+  const jsonstring = message.slice(startindex, endindex);
+  const data=JSON.parse(jsonstring)
+  const file=reader.readFile("./studentdata.xlsx")
+  const ws = reader.utils.json_to_sheet(data)
+  reader.utils.book_append_sheet(file,ws,"Sheet3")
+  reader.writeFile(file,'./studentdata.xlsx')
+
+}
 // main();
 module.exports=main;

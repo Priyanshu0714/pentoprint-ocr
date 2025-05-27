@@ -70,7 +70,7 @@ async function recognizeHandwriting(imageFilePath) {
 }
 
 // Process images after ensuring the file list is ready
-async function processImages(num) {
+async function processImages(num,filterText="all") {
   const dirname = path.join(__dirname, `output-images${num}`);
   try {
     const imageFilePaths = await getImageFilePaths(dirname); // Wait until files are loaded
@@ -87,24 +87,10 @@ async function processImages(num) {
       fs.writeFileSync(`./recognized_txt${num}/recognized_text.txt`, allRecognizedText.trim(), "utf8");
       fs.appendFileSync(
         `./recognized_txt${num}/recognized_text.txt`,
-        `\n\nExtract only the uid, name, gender, contact number, semester of internship, backlogs, company name, company location, stipend of the data and give the output as CSV in JSON format like:
-        
-        [
-          {
-            "uid": "studentuid",
-            "name": "student name",
-            "gender": "student gender",
-            "contact no": "student contact",
-            "semester of internship": "student internship semester",
-            "backlogs": "student backlogs",
-            "company name": "student company details",
-            "company location": "student company location",
-            "stipend": "student stipend"
-          }
-        ]`,
+        `\n\n${filterText}`,
         "utf8"
       );
-      
+      return allRecognizedText;
     } else {
       console.log("No recognized text to save.");
     }

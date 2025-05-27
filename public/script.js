@@ -1,3 +1,4 @@
+document.getElementById("animationinterface").classList.replace("flex","hidden")
 document.getElementById("file").addEventListener("change", function () {
     const fileInput = this;
     const file = fileInput.files[0];
@@ -77,3 +78,46 @@ function validateForm() {
 
     return true;
 }
+
+document.getElementById("form-submit").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+    document.getElementById("animationinterface").classList.replace("hidden","flex")
+
+    const form = e.target;
+    const fileInput = document.getElementById("file");
+    const filterText = document.getElementById("inputForFilter").value;
+    const formData = new FormData();
+    formData.append("file", fileInput.files[0]);
+    formData.append("filterText", filterText);
+
+    try {
+        const response = await fetch(form.action, {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error("Upload failed");
+        }
+        const result = await response.json();
+        console.log(result)
+        document.getElementById("responseText").value=result.tempresult;
+        document.getElementById("responseText").parentElement.classList.remove("hidden")
+        document.getElementById("form-submit").parentElement.classList.replace("flex","hidden")
+        document.getElementById("animationinterface").classList.replace("flex","hidden")
+
+    } catch (error) {
+        console.error("Error uploading file:", error);
+        alert("Error uploading file. Please try again.");
+    }
+});
+
+document.getElementById("closeResponseText").addEventListener("click",()=>{
+    document.getElementById("responseText").value="";
+    document.getElementById("responseText").parentElement.classList.add("hidden")
+    document.getElementById("form-submit").parentElement.classList.replace("hidden","flex")
+    window.location.href="/"
+}
+)

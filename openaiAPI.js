@@ -5,7 +5,7 @@ const fsPromises = require('fs').promises; // Async functions
 const reader = require("xlsx");
 
 const openai = new OpenAI({
-  apiKey: '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',
+  apiKey: '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',
   baseURL: 'https://integrate.api.nvidia.com/v1',
 });
 
@@ -27,8 +27,8 @@ async function main(num) {
     for await (const chunk of completion) {
       maincontent += chunk.choices[0]?.delta?.content || '';
     }
-
-    WriteToExcel(maincontent);
+    console.log(maincontent)
+    return maincontent;
   } catch (error) {
     console.log("Some error occurred ", error);
   }

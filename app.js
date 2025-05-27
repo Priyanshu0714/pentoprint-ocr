@@ -35,24 +35,22 @@ app.get("/", (req, res) => {
 // here is the main login for file handling
 app.post("/upload",upload.single("file"),async(req,res)=>{
   const filepath=req.file.path
- 
+  const filterText = req.body.filterText || "";
+
   // here pdf is converted to images
   await convertPdfToImages(filepath,filenumber);
   // now converting the images to grayscale
   await grayscale(filenumber);
   // now send the data to microsoft azure api
-  await imageRead(filenumber);
-  // now read the file using the lamma model
-  await openai(filenumber);
-
-  // deletefile(`./uploads${filenumber}`,".pdf")
-  // deletefile(`./output-images${filenumber}`,".png")
-  // deletefile(`./grayscale_img${filenumber}`,".png")
-  // deletefile(`./recognized_txt${filenumber}`,".txt")
+  tempresult=await imageRead(filenumber,filterText);
+  if(filterText){    
+    let result=await openai(filenumber);
+    return res.status(200).json({tempresult:result});
+  }
+  
   removedir(filenumber)
-  filenumber++;
-  // now will send the pdfs to the server
-  return res.redirect("/")
+  // filenumber++;
+  return res.status(200).json({tempresult});
 })
 
 
